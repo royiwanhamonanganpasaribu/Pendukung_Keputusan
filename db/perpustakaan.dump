@@ -1,0 +1,222 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.8
+-- Dumped by pg_dump version 9.6.8
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: admin; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.admin (
+    id_admin integer NOT NULL,
+    username character varying(50),
+    password character varying(50),
+    level character varying(2)
+);
+
+
+ALTER TABLE public.admin OWNER TO postgres;
+
+--
+-- Name: admin_id_admin_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.admin_id_admin_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.admin_id_admin_seq OWNER TO postgres;
+
+--
+-- Name: admin_id_admin_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.admin_id_admin_seq OWNED BY public.admin.id_admin;
+
+
+--
+-- Name: buku; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.buku (
+    judul_buku character(500),
+    pengarang character(50),
+    penerbit character(50),
+    kode_buku character varying(50)
+);
+
+
+ALTER TABLE public.buku OWNER TO postgres;
+
+--
+-- Name: pinjam; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.pinjam (
+    id_anggota integer NOT NULL,
+    nama_anggota character varying(50),
+    kode_buku character varying(50),
+    judul_buku character varying(200),
+    tglpinjam date,
+    batas date
+);
+
+
+ALTER TABLE public.pinjam OWNER TO postgres;
+
+--
+-- Name: pinjam_id_anggota_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.pinjam_id_anggota_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.pinjam_id_anggota_seq OWNER TO postgres;
+
+--
+-- Name: pinjam_id_anggota_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.pinjam_id_anggota_seq OWNED BY public.pinjam.id_anggota;
+
+
+--
+-- Name: siswa; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.siswa (
+    id_anggota character varying(50),
+    nama_anggota character varying(50),
+    kelas character(3),
+    no_hp numeric(12,0),
+    alamat character(50)
+);
+
+
+ALTER TABLE public.siswa OWNER TO postgres;
+
+--
+-- Name: admin id_admin; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.admin ALTER COLUMN id_admin SET DEFAULT nextval('public.admin_id_admin_seq'::regclass);
+
+
+--
+-- Name: pinjam id_anggota; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pinjam ALTER COLUMN id_anggota SET DEFAULT nextval('public.pinjam_id_anggota_seq'::regclass);
+
+
+--
+-- Data for Name: admin; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.admin (id_admin, username, password, level) FROM stdin;
+1	admin	admin	1
+\.
+
+
+--
+-- Name: admin_id_admin_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.admin_id_admin_seq', 1, true);
+
+
+--
+-- Data for Name: buku; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.buku (judul_buku, pengarang, penerbit, kode_buku) FROM stdin;
+Cerdas dan Terampil Teknologi Informasi dan Komunikasi 1 kelas VII                                                                                                                                                                                                                                                                                                                                                                                                                                                  	Reynold – Djuharis Rasul                          	Pusat PerbukuanKementerian Pendidikan Nasional    	1
+125 Lagu Wajib Nasional                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             	Tim Redaksi                                       	titik-Media                                       	2
+Koleksi Terlengkap Lagu Wajib Nasional, Daerah, & Anak-anak                                                                                                                                                                                                                                                                                                                                                                                                                                                         	Farid                                             	Cetak-Buku                                        	3
+Buku Pintar Rangkuman & Trik IPA SMP kelas 1,2,3                                                                                                                                                                                                                                                                                                                                                                                                                                                                    	Ika Styeni                                        	GentaSmart                                        	4
+Sulap Matematika SMP/MTs Kelas 9, Seri Ulangan & Latihan Anti Perbaikan                                                                                                                                                                                                                                                                                                                                                                                                                                             	Muh. Fajaruddin Atsnan Dan Rahmita Yulianan Gazali	Andi-Publisher                                    	5
+\.
+
+
+--
+-- Data for Name: pinjam; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.pinjam (id_anggota, nama_anggota, kode_buku, judul_buku, tglpinjam, batas) FROM stdin;
+1	1	1	1	2020-01-22	2020-01-28
+444	sdfg	sdfg	sdfg	2020-01-16	2020-01-23
+456	Ruju	678	Bahasa Indonesia	2020-01-23	2020-01-30
+\.
+
+
+--
+-- Name: pinjam_id_anggota_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.pinjam_id_anggota_seq', 1, false);
+
+
+--
+-- Data for Name: siswa; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.siswa (id_anggota, nama_anggota, kelas, no_hp, alamat) FROM stdin;
+10	Roni	8A 	12345678	Jl. Kopo                                          
+20	Ridwan	9B 	54898498	Jl. Cibaduyut                                     
+30	Sona	7C 	7894564	Jl. Perumnas                                      
+40	Isa	7E 	9014894	Jl. Holis                                         
+50	Yukeu	9C 	5989844	Jl. Dago                                          
+\.
+
+
+--
+-- Name: admin admin_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.admin
+    ADD CONSTRAINT admin_pkey PRIMARY KEY (id_admin);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
